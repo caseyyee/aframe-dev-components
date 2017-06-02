@@ -1,8 +1,6 @@
 module.exports = {
   schema: {
     size: { type: 'number', default: 1 },
-    alignToWorld: { type: 'boolean', default: false },
-    window: { type: 'boolean', default: false },
     windowSize: { type: 'int', default: 100 },
     windowBackground: { type: 'string', default: 'rgb(3, 44, 113)' }
   },
@@ -10,8 +8,8 @@ module.exports = {
   init: function () {
     var axisHelper = this.makeAxisHelper();
     this.axisHelper = axisHelper;
-
-    if (this.data.window) {
+    this.isCamera = this.el.getObject3D('camera') === undefined ? false : true;
+    if (this.isCamera) {
       this.makeAxisWindow();
       // adds axis to axis window
       this.axisScene.add(this.axisHelper);
@@ -41,7 +39,6 @@ module.exports = {
   },
 
   makeAxisHelper: function () {
-    console.log('helper')
     var axisHelper = new THREE.AxisHelper(this.data.size);
     axisHelper.material.transparent = true;
     axisHelper.material.depthTest = false;
@@ -66,12 +63,9 @@ module.exports = {
   },
 
   tick: function () {
-    if (this.data.alignToWorld) {
+    if (this.isCamera) {
       var q = this.el.sceneEl.camera.getWorldQuaternion();
       this.axisHelper.setRotationFromQuaternion(q.inverse());
-    }
-
-    if (this.data.window) {
       this.axisRenderer.render(this.axisScene, this.axisCamera);
     }
   }
