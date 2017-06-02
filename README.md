@@ -44,15 +44,22 @@ Retains camera position and orientation through scene reloads.
 Adds axis helper to entity.   Makes it easier to visualize entity orientation in a scene.
 
 ```html
-<a-entity axis></a-axis>
+<a-entity axis></a-entity>
 ```
+
+When added to `<a-camera>` or entity with `camera` component, a axis is displayed in the viewport that shows the _world coordinate_ relative to the cameras orientation.
+
+```html
+<a-camera axis></a-camera>
+```
+
+
 
 | Property      | Description   | Default
 | ------------- | ------------- | ----
 | size | size of line representing axis | 1
 
 
-If `axis` is added to `<a-camera>` or entity with `camera` component, a axis is displayed in the viewport that shows the _world coordinate_ relative to the cameras orientation.
 
 See three.js docs [AxisHelper](https://threejs.org/docs/?q=axis#Reference/Helpers/AxisHelper).
 
