@@ -41,7 +41,7 @@ Retains camera position and orientation through scene reloads.
 
 #### axis
 
-Adds axis helper to entity.   Makes it easier to visualize the objects position and orientation in scene.
+Adds axis helper to entity.   Makes it easier to visualize entity orientation in a scene.
 
 ```html
 <a-entity axis></a-axis>
@@ -52,7 +52,9 @@ Adds axis helper to entity.   Makes it easier to visualize the objects position 
 | size | size of line representing axis | 1
 
 
-See three.js docs [AxisHelper](https://threejs.org/docs/?q=axis#Reference/Helpers/AxisHelper)
+If `axis` is added to `<a-camera>` or entity with `camera` component, a axis is displayed in the viewport that shows the _world coordinate_ relative to the cameras orientation.
+
+See three.js docs [AxisHelper](https://threejs.org/docs/?q=axis#Reference/Helpers/AxisHelper).
 
 
 #### bounding-box
