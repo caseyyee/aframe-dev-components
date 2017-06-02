@@ -1,19 +1,17 @@
 ## aframe-dev-components
 
-Helpers for making [A-Frame](https://aframe.io) easier and fun to work with.
+Helpers for making [A-Frame](https://aframe.io) easier to work with.
 
-For [A-Frame](https://aframe.io).
+![A-Frame dev-components](https://raw.githubusercontent.com/caseyyee/aframe-dev-components/master/img/screen.jpg)
 
-### Installation
-
-#### Browser
-
-Install and use by directly including the [browser files](dist):
+### Usage
 
 ```html
 <head>
   <title>My A-Frame Scene</title>
-  <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+
+  <!-- Include component script into your project along with A-Frame. -->
   <script src="https://unpkg.com/aframe-dev-components/dist/aframe-dev-components.min.js"></script>
 </head>
 
