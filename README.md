@@ -1,32 +1,36 @@
 ## aframe-dev-components
 
-Helpers for making [A-Frame](https://aframe.io) easier to work with.
+Helpers for making [A-Frame](https://aframe.io/) easier to work with.
 
 ![A-Frame dev-components](https://raw.githubusercontent.com/caseyyee/aframe-dev-components/master/img/screen.jpg)
 
 ### Usage
 
 ```html
-<head>
-  <title>My A-Frame Scene</title>
-  <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My A-Frame Scene</title>
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
 
-  <!-- Include component script into your project along with A-Frame. -->
-  <script src="https://unpkg.com/aframe-dev-components/dist/aframe-dev-components.min.js"></script>
-</head>
+    <!-- Include component script into your project along with A-Frame. -->
+    <script src="https://unpkg.com/aframe-dev-components/dist/aframe-dev-components.min.js"></script>
+  </head>
+  <body>
 
-<body>
-  <a-scene>
-    <!-- A-Frame markup -->
-  </a-scene>
-</body>
+    <a-scene>
+      <!-- A-Frame markup -->
+    </a-scene>
+  </body>
+</html>
 ```
 
 ### Components
 
-#### retain-camera
+#### `retain-camera`
 
-Retains camera position and orientation through scene reloads.
+Persists the camera position and orientation between scene reloads.
 
 ```html
 <a-scene retain-camera></a-scene>
@@ -37,15 +41,15 @@ Retains camera position and orientation through scene reloads.
 | ` | reset to original camera.
 
 
-#### axis
+#### `axis`
 
-Adds axis helper to entity.   Makes it easier to visualize entity orientation in a scene.
+Adds an axis helper to an entity. Makes it easier to visualize an entity's orientation in a scene.
 
 ```html
 <a-entity axis></a-entity>
 ```
 
-When added to `<a-camera>` or entity with `camera` component, a axis is displayed in the viewport that shows the _world coordinate_ relative to the cameras orientation.
+When added to `<a-camera>` or an entity with the `camera` component, an axis is displayed in the viewport that shows the _world coordinate_ relative to the camera's orientation.
 
 ```html
 <a-camera axis></a-camera>
@@ -59,24 +63,24 @@ When added to `<a-camera>` or entity with `camera` component, a axis is displaye
 
 
 
-See three.js docs [AxisHelper](https://threejs.org/docs/?q=axis#Reference/Helpers/AxisHelper).
+See three.js' docs for [`AxisHelper`](https://threejs.org/docs/?q=axis#api/helpers/AxisHelper).
 
 
 #### bounding-box
 
-draws bounding box around entity mesh.
+Draws a bounding box around an entity's mesh.
 
 ```html
 <a-entity bb></a-axis>
 
 ```
 
-See three.js docs [BoxHelper](https://threejs.org/docs/?q=box#Reference/Helpers/BoxHelper)
+See three.js' docs for [`BoxHelper`](https://threejs.org/docs/?q=box#api/helpers/BoxHelper).
 
 
 ### npm
 
-Install via npm:
+Install via [npm](https://www.npmjs.com/package/aframe-dev-components):
 
 ```bash
 npm install aframe-dev-components
