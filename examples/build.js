@@ -10,7 +10,9 @@ AFRAME.registerComponent('retain-camera', require('./src/retain-camera'));
 AFRAME.registerComponent('axis', require('./src/axis'));
 
 AFRAME.registerComponent('bb', require('./src/bounding-box'));
-},{"./src/axis":4,"./src/bounding-box":5,"./src/retain-camera":6,"aframe":3}],3:[function(require,module,exports){
+
+AFRAME.registerComponent('recorder', require('./src/recorder'));
+},{"./src/axis":4,"./src/bounding-box":5,"./src/recorder":6,"./src/retain-camera":7,"aframe":3}],3:[function(require,module,exports){
 (function (global){
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.AFRAME = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 var str = Object.prototype.toString
@@ -79558,6 +79560,83 @@ module.exports = {
 
 
 },{}],6:[function(require,module,exports){
+module.exports = {
+  init: function () {
+
+    var scene = this.el.sceneEl
+    var framerate = 5;
+    var chunks = [];
+    this.recording = false;
+
+    this.getSceneCanvas = new Promise(function (resolve) {
+      if (scene.loaded) {
+        resolve(scene.canvas);
+      }
+      scene.addEventListener('loaded', function () {
+        resolve(scene.canvas);
+      });
+    });
+    this.getSceneCanvas.then(this.setupRecorder)
+  },
+
+  setupRecorder: function (canvas) {
+    var videoData = [];
+    var recording = false;
+    var framerate = 25;
+    var stream = canvas.captureStream(framerate);
+    var recorder = new MediaRecorder(stream);
+    recorder.ondataavailable = handleDataAvailable;
+
+    function handleDataAvailable(e) {
+      if (e.data.size > 0) {
+        videoData.push(e.data);
+
+        // download chunks
+        var blob = new Blob(videoData, {
+          type: 'video/webm'
+        });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        document.body.appendChild(a);
+        a.style = 'display: none';
+        a.href = url;
+        a.download = 'a-recording.webm';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+    }
+
+    var div = document.createElement('div');
+    div.style.fontFamily = 'Helvetica, Arial, Sans-Serif';
+    div.style.padding = '10px';
+    div.style.color = 'white';
+    div.style.position = 'absolute';
+    div.style.background = 'black';
+    div.style.top = '0px';
+    div.style.left = '0px';
+    div.style.visibility = 'hidden';
+
+    window.addEventListener('keydown', function(e) {
+      if(e.key === 'r') {
+        if (!recording) {
+          recorder.start();
+          document.body.appendChild(div);
+          div.style.visibility = 'visible';
+          div.innerHTML = 'Recording</br>Press `R` to end.';
+        } else {
+          recorder.stop();
+          div.innerHTML = 'Finished!';
+          setTimeout(function () {
+            div.parentNode.removeChild(div);
+          }, 2000)
+        }
+
+        recording = (recording) ? false : true;
+      }
+    });
+  }
+};
+},{}],7:[function(require,module,exports){
 /* global localStorage */
 module.exports = {
   init: function () {
