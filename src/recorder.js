@@ -1,6 +1,9 @@
 module.exports = {
-  init: function () {
+  schema: {
+    framerate: { type: 'number', default: 24 }
+  },
 
+  init: function () {
     var scene = this.el.sceneEl
     var framerate = 5;
     var chunks = [];
@@ -14,14 +17,13 @@ module.exports = {
         resolve(scene.canvas);
       });
     });
-    this.getSceneCanvas.then(this.setupRecorder)
+    this.getSceneCanvas.then(this.setupRecorder.bind(this));
   },
 
   setupRecorder: function (canvas) {
     var videoData = [];
     var recording = false;
-    var framerate = 25;
-    var stream = canvas.captureStream(framerate);
+    var stream = canvas.captureStream(this.data.framerate);
     var recorder = new MediaRecorder(stream);
     recorder.ondataavailable = handleDataAvailable;
 
