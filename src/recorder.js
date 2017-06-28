@@ -29,36 +29,22 @@ module.exports = {
 
     // playback window
     var playback = document.createElement('video');
+    playback.style.cssText = 'position: absolute; top: 100px; left: 0px; background: black; visibility: hidden';
     playback.width = 320;
     playback.height = 240;
-    playback.style.position = 'absolute';
-    playback.style.top = '100px';
-    playback.style.left = '0px';
-    playback.style.background = 'black';
-    playback.style.visibility = 'hidden';
     document.body.appendChild(playback);
 
     // record button
     var recordButton = document.createElement('button');
+    recordButton.style.cssText = 'position: absolute; top: 0px; left: 0px;'
     recordButton.innerHTML = 'Record';
-    recordButton.style.position = 'absolute';
-    recordButton.style.left = '0px';
-    recordButton.style.top = '0px';
-    recordButton.style.zIndex = '100';
     document.body.appendChild(recordButton);
     recordButton.addEventListener('click', toggleRecorder);
 
     // status
     var div = document.createElement('div');
-    div.style.fontFamily = 'Helvetica, Arial, Sans-Serif';
-    div.style.padding = '10px';
-    div.style.color = 'white';
-    div.style.position = 'absolute';
-    div.style.top = '20px';
-    div.style.left = '0px';
-    div.style.background = 'black';
-    div.style.visibility = 'hidden';
-
+    div.style.cssText = 'position: absolute; top: 20px; left: 0px; color: white; background: black; visibility: hidden; font-family: Helvetica, Arial, Sans-Serif; padding: 10px;';
+    
     // window.addEventListener('keydown', function(e) {
     //   if(e.key === 'r') {
     //     toggleRecorder();
