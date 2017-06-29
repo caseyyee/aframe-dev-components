@@ -28,11 +28,39 @@ module.exports = {
     recorder.ondataavailable = handleDataAvailable;
 
     // playback window
+    var playbackContainer = document.createElement('div');
+    playbackContainer.style.cssText = 'position: absolute; top: 100px; left: 0px; visibility: hidden';
+
     var playback = document.createElement('video');
-    playback.style.cssText = 'position: absolute; top: 100px; left: 0px; background: black; visibility: hidden';
+    playback.style.cssText = 'background: black;';
     playback.width = 320;
     playback.height = 240;
-    document.body.appendChild(playback);
+    playbackContainer.appendChild(playback);
+
+    var saveButton = document.createElement('button');
+    saveButton.style.cssText = 'display: block';
+    saveButton.innerHTML = 'Save';
+    saveButton.addEventListener('click', function () {
+      var http = new XMLHttpRequest();
+      var url = '/saveVideo';
+      var params = 'lorem=ipsum&name=binny';
+      http.open('POST', url, true);
+
+      //Send the proper header information along with the request
+      http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+      http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+          alert(http.responseText);
+        }
+      }
+      http.send(params);
+    });
+
+    playbackContainer.appendChild(saveButton);
+
+    document.body.appendChild(playbackContainer);
+
 
     // record button
     var recordButton = document.createElement('button');
@@ -44,7 +72,7 @@ module.exports = {
     // status
     var div = document.createElement('div');
     div.style.cssText = 'position: absolute; top: 20px; left: 0px; color: white; background: black; visibility: hidden; font-family: Helvetica, Arial, Sans-Serif; padding: 10px;';
-    
+
     // window.addEventListener('keydown', function(e) {
     //   if(e.key === 'r') {
     //     toggleRecorder();
@@ -66,7 +94,7 @@ module.exports = {
         playback.pause();
         playback.src = '';
         playback.load();
-        playback.style.visibility = 'hidden';
+        playbackContainer.style.visibility = 'hidden';
       }
       videoData = [];
       recorder.start();
@@ -97,9 +125,9 @@ module.exports = {
         var url = URL.createObjectURL(blob);
         playback.autoplay = true;
         playback.loop = true;
-        playback.style.visibility = 'visible';
         playback.src = url;
         playback.play();
+        playbackContainer.style.visibility = 'visible';
 
         // var a = document.createElement('a');
         // document.body.appendChild(a);
