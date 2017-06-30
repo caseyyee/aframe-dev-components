@@ -1,10 +1,13 @@
 module.exports = {
   schema: {
-    framerate: { type: 'number', default: 24 }
+    framerate: { type: 'number', default: 24 },
+    postUrl: { type: 'string' },
+    mediaType: { type: 'string', default: 'mp4' },
+    fileName: { type: 'string', default: 'preview' }
   },
 
   init: function () {
-    var scene = this.el.sceneEl
+    var scene = this.el.sceneEl;
     var framerate = 5;
     var chunks = [];
     this.recording = false;
@@ -41,21 +44,21 @@ module.exports = {
     saveButton.style.cssText = 'display: block';
     saveButton.innerHTML = 'Save';
     saveButton.addEventListener('click', function () {
-      var http = new XMLHttpRequest();
-      var url = '/saveVideo';
-      var params = 'lorem=ipsum&name=binny';
-      http.open('POST', url, true);
+      var xhr = new XMLHttpRequest();
+      var formData = new FormData();
 
-      //Send the proper header information along with the request
-      http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.addEventListener('load', function () {
+        console.log('loaded', xhr.responseText);
+      });
 
-      http.onreadystatechange = function() {//Call a function when the state changes.
-        if(http.readyState == 4 && http.status == 200) {
-          alert(http.responseText);
-        }
-      }
-      http.send(params);
-    });
+      var blob = new Blob(videoData, {
+        type: 'video/' + this.data.mediaType
+      });
+
+      formData.append('files', blob, this.data.fileName + '.' + this.data.mediaType);
+      xhr.open('POST', this.data.postUrl, true);
+      xhr.send(formData);
+    }.bind(this));
 
     playbackContainer.appendChild(saveButton);
 
@@ -120,7 +123,7 @@ module.exports = {
 
         // download chunks
         var blob = new Blob(videoData, {
-          type: 'video/mp4'
+          type: 'video/webm'
         });
         var url = URL.createObjectURL(blob);
         playback.autoplay = true;

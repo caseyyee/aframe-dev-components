@@ -5,7 +5,7 @@
     <script src="../build.js"></script>
   </head>
   <body>
-    <a-scene retain-camera recorder>
+    <a-scene retain-camera recorder="postUrl: http://localhost:3333/upload">
       <a-sphere bb position="0 1.25 -1" radius="1.25" color="#EF2D5E"></a-sphere>
       <a-box axis position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1"  color="#4CC3D9"></a-box>
       <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
