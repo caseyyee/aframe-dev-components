@@ -48,8 +48,8 @@ module.exports = {
       var formData = new FormData();
 
       xhr.addEventListener('load', function () {
-        console.log('loaded', xhr.responseText);
-      });
+        console.log('Video posted to: ', this.data.postUrl);
+      }.bind(this));
 
       var blob = new Blob(videoData, {
         type: 'video/' + this.data.mediaType
